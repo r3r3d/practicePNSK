@@ -38,9 +38,9 @@
 
 
 
-            <p v-if="inventory > 10">In Stock</p>
+            <p v-if="inStock">In Stock</p>
+            <p v-else="{ outOfStock: !inStock }">Out of Stock</p>
             <p v-else-if="inventory <= 10 && inventory">Almost sold out!</p>
-            <p :class="{ outOfStock: !inStock }">Out of Stock</p>
 
             <a href="link"> More products like this</a>
             <div class="cart">
