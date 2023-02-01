@@ -93,3 +93,6 @@ textarea {
 .avSize{
     font-weight: bold;
 }
+.outOfStock {
+    text-decoration: line-through;
+}
