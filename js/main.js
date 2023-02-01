@@ -33,10 +33,14 @@ Vue.component('product', {
             <div class="cart">
                 <p>Cart({{ cart }})</p>
             </div>
+            <div class="but">
             <button @click="addToCart"
                         v-bind:disabled="!inStock"
-                        v-bind:class="{ disabledButton: !inStock }">Add to cart</button>
+                        v-bind:class="{ disabledButton: !inStock }">Add to cart</button><br>
                         <button @click="removeFromCart">Remove from cart</button>
+                        
+                        </div>
+                        
         </div>
 </div>`,
     data(){
