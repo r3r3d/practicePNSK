@@ -72,9 +72,9 @@ Vue.component('product', {
 <p>Would you recommend this product?</p>
                     <div>
                         <label for="question">yes</label>
-                        <input type="radio" value="yes" v-model="question">
+                        <input type="radio" value="Yes." v-model="question">
                         <label for="question">no</label>
-                        <input type="radio" value="no" v-model="question">
+                        <input type="radio" value="No,sorry" v-model="question">
                     </div>
 
 <ul>
