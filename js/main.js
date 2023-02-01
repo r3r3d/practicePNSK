@@ -1,4 +1,24 @@
+Vue.component('product-details', {
+    props: {
+        details: {
+            type: Boolean,
+            required: true
+        }
+    },
+    template: `
+    <ul>
+      <li v-for="detail in details">{{ detail }}</li>
+    </ul>
+  `
+})
+
 Vue.component('product', {
+        premium:{
+            type: Boolean,
+            required: true
+
+
+        },
     template: `<div class="product">
 
         <div class="product-image">
@@ -6,6 +26,7 @@ Vue.component('product', {
         </div>
         <div class="product-info">
             <h1>{{ title }}</h1>
+            <p>Shipping: {{ shipping }}</p>
             <p>{{ description }}</p>
             <b><span class="sale" v-if="onSale">Sale -50%</span></b>
             <ul>
@@ -30,14 +51,12 @@ Vue.component('product', {
             <p v-else style="text-decoration: line-through">Out of Stock</p>
 
             <a href="link"> More products like this</a>
-            <div class="cart">
-                <p>Cart({{ cart }})</p>
-            </div>
             <div class="but">
-            <button @click="addToCart"
-                        v-bind:disabled="!inStock"
-                        v-bind:class="{ disabledButton: !inStock }">Add to cart</button><br>
-                        <button @click="removeFromCart">Remove from cart</button>
+            <button 
+            v-on:click="addToCart":disabled="!inStock"
+              :class="{ disabledButton: !inStock }"> Add to cart </button><br>
+            <button 
+            v-on:click="removeToCart">Remove from cart</button>
                         
                         </div>
                         
@@ -75,20 +94,23 @@ Vue.component('product', {
                     }],
 
                 cart: 0,
-        }
+                }
         },
         methods:{
             addToCart() {
-                this.cart += 1
+                this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
             },
-            removeFromCart() {
-                this.cart -= 1
+
+            removeToCart() {
+                this.$emit('remove-to-cart', this.variants[this.selectedVariant].variantId)
+                eventBus.$emit('on-message', 'удалил')
             },
             updateProduct(index) {
                 this.selectedVariant = index;
                 console.log(index);
 
-            }
+            },
+
 
         },
         computed:{
@@ -100,10 +122,36 @@ Vue.component('product', {
             },
             inStock(){
                 return this.variants[this.selectedVariant].variantQuantity
+            },
+            shipping() {
+                if (this.premium) {
+                    return "Free";
+                } else {
+                    return 2.99
+                }
             }
 
     }
 })
 let app = new Vue({
-    el: '#app'
-    })
+    el: '#app',
+    data: {
+        premium: true,
+        cart: []
+    },
+    methods: {
+        updateCart(id) {
+            this.cart.push(id)
+        },
+        removeCart(id) {
+            for (let i = this.cart.length - 1; i >= 0; i--) {
+                if (this.cart[i] === id) {
+                    this.cart.splice(i, 1);
+                }
+            }
+        }
+    }
+
+
+})
+
