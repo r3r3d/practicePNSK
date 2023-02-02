@@ -14,7 +14,7 @@ Vue.component('product-details', {
 })
 
 Vue.component('product', {
-        pprops: {
+        props: {
             premium: {
                 type: Boolean,
                 required: true
@@ -78,14 +78,13 @@ Vue.component('product', {
     data(){
         return {
                 product: "Socks",
-
+                details: ['80% cotton', '20% polyester', 'Gender-neutral'],
                 altText: "A pair of socks",
                 link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks",
                 selectedVariant: 0,
                 brand: 'Vue Mastery ',
                 description: "A pair of warm, fuzzy socks",
                 onSale: true,
-                details: ['80% cotton', '20% polyester', 'Gender-neutral'],
                 reviews: [],
             variants: [
                     {
@@ -254,6 +253,7 @@ Vue.component('product-tabs', {
             :class="{ activeTab: selectedTab === tab }" 
             v-for="(tab, index) in tabs" 
             @click="selectedTab = tab"
+            :key="tab"
       >{{ tab }}</span>
     </ul> 
     <div v-show="selectedTab === 'Reviews'">
@@ -272,7 +272,8 @@ Vue.component('product-tabs', {
   </div>`,
     data() {
         return {
-            tabs: ['Reviews', 'Make a Review'],
+
+            tabs: ['Reviews', 'Make a Review', 'Shipping', 'Details'],
             selectedTab: 'Reviews'  // устанавливается с помощью @click
         }
     }
@@ -304,6 +305,7 @@ Vue.component('info-tabs', {
         </div>
 
         <div v-show="selectedTab === 'Details'">
+        <p>{{ details}}</p>
           <ul>
             <li v-for="detail in details">{{ detail }}</li>
           </ul>
