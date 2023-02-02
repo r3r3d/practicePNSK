@@ -34,9 +34,7 @@ Vue.component('product', {
             <p>Shipping: {{ shipping }}</p>
             <p>{{ description }}</p>
             <b><span class="sale" v-if="onSale">Sale -50%</span></b>
-            <ul>
-                <li v-for="detail in details">{{ detail }}</li>
-            </ul>
+            
 
         <p class="avSize">Size available</p>
             <div v-for="size in sizes" :key="size.sizes">
@@ -68,7 +66,7 @@ Vue.component('product', {
 
                         
         </div>
-        <product-tabs :reviews="reviews"></product-tabs>
+        <product-tabs :reviews="reviews" :shipping="shipping" :details="details"></product-tabs>
         <div>
 
 
@@ -243,9 +241,16 @@ Vue.component('product-tabs', {
     props: {
         reviews: {
             type: Array,
-            required: false
-        }
+
+            required: true
+        },
+        shipping: {
+            required: true
     },
+        details: {
+            type: Array,
+            required: true
+        }},
     template: `
    <div>    
     <ul>
@@ -268,6 +273,14 @@ Vue.component('product-tabs', {
     </div>
     <div v-show="selectedTab === 'Make a Review'">
       <product-review></product-review>
+    </div>
+    <div v-show="selectedTab === 'Shipping'">
+      <p>{{ shipping }}</p>
+    </div>
+    <div v-show="selectedTab === 'Details'">
+      <ul>
+                <li v-for="detail in details">{{ detail }}</li>
+            </ul>
     </div>
   </div>`,
     data() {
@@ -299,17 +312,6 @@ Vue.component('info-tabs', {
                 :key="tab"
           >{{ tab }}</span>
         </ul>
-
-        <div v-show="selectedTab === 'Shipping'">
-          <p>{{ shipping }}</p>
-        </div>
-
-        <div v-show="selectedTab === 'Details'">
-        <p>{{ details}}</p>
-          <ul>
-            <li v-for="detail in details">{{ detail }}</li>
-          </ul>
-        </div>
     
       </div>
     `,
